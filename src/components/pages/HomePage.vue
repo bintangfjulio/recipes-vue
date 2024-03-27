@@ -8,19 +8,25 @@
         friends you follow.
       </p>
     </div>
-    <recipe-list :recipes="recipeList"></recipe-list>
+    <recipe-list :recipes="recipeList" v-if="recipeListStatus"></recipe-list>
   </div>
 </template>
 
 <script setup>
 import RecipeList from "../recipe/RecipeList.vue";
-import RECIPE_DATA from "../../recipe.js";
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+const recipeListStatus = ref(false);
+const recipeList = ref();
 
-const recipeList = RECIPE_DATA;
-
-// export default {
-//   components: {
-//     RecipeList,
-//   },
-// };
+onMounted(async () => {
+  try {
+    await store.dispatch("recipe/getRecipeData");
+    recipeListStatus.value = true;
+    recipeList.value = store.state.recipe.recipes;
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>
