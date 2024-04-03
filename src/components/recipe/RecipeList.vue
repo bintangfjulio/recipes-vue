@@ -5,7 +5,11 @@
       style="padding-top: 12px; padding-bottom: 12px"
       v-for="recipe in recipes"
     >
-      <div class="card text-decoration-none" style="height: 398px">
+      <router-link
+        :to="`/recipe/${recipe.id}`"
+        class="card text-decoration-none"
+        style="height: 398px"
+      >
         <img
           :src="recipe.imageLink"
           class="card-img-top"
@@ -21,7 +25,7 @@
           </div>
           <p>Recipe By {{ recipe.username }}</p>
         </div>
-      </div>
+      </router-link>
       <div
         class="position-absolute text-secondary bg-light px-2 py-1 rounded-circle top-0 end-0 m-4 like-icon"
       >
